@@ -1,5 +1,2 @@
 #!/bin/bash
-python3 $PYCODE
-name_m= "tola"
-age = 5
-print(f"Her name is {name_m} she is {age} years old")
+python3 -c "$PYCODE"
