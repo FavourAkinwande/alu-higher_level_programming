@@ -1,33 +1,20 @@
 #!/usr/bin/python3
-"""Lists all State objects that contain the letter 'a' from the hbtn_0e_6_usa database"""
+""" list objects with a in them """
 
-import sys
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from model_state import Base, State
 
 if __name__ == "__main__":
-    # Check if the number of arguments is correct
-    if len(sys.argv) != 4:
-        print("Usage: {} username password database".format(sys.argv[0]))
-        sys.exit(1)
-
-    # Create a connection to the database
-    username = sys.argv[1]
-    password = sys.argv[2]
-    database_name = sys.argv[3]
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'.
-                           format(username, password, database_name),
-                           pool_pre_ping=True)
-
-    # Create a session to interact with the database
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
-    # Query the database to retrieve State objects with 'a' in their name
-    states_with_a = session.query(State).filter(State.name.like('%a%')).order_by(State.id).all()
-
-    # Display the results
-    for state in states_with_a:
-        print("{}: {}".format(state.id, state.name))
-
+    from sys import argv
+    from model_state import State, Base
+    from sqlalchemy import create_engine
+    from sqlalchemy.orm import sessionmaker
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(
+        argv[1], argv[2], argv[3]), pool_pre_ping=True)
+    session = sessionmaker(bind=engine)
+    Base.metadata.create_all(engine)
+    st = session().query(State).filter(State.name.like('%a%')).order_by(
+        State.id).all()
+    if st:
+        for stat in st:
+            if 'a' in stat.name:
+                print("{}: {}".format(stat.id, stat.name))
+    session().close()
