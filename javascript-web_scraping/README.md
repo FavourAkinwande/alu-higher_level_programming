@@ -1,0 +1,1 @@
+This JavaScript Web Scraping project provides a simple framework and examples for extracting data from websites using JavaScript. Web scraping is a powerful technique to automate data collection from the web, and JavaScript is a versatile language for this purpose.
